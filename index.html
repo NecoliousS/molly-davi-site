@@ -56,61 +56,80 @@
         }
         .nav-links a:hover { color: var(--utah-red); }
 
-        /* HERO - CINEMATIC DARK */
+        /* HERO - HARD SPLIT */
         .hero {
             min-height: 100vh;
-            background: var(--black);
-            color: var(--white);
+            background: var(--white);
             display: flex;
-            align-items: flex-end;
-            padding: 6rem 2rem 4rem;
             position: relative;
             overflow: hidden;
+            padding-top: 4rem;
         }
-        .hero-glow {
-            position: absolute;
-            bottom: -200px; right: -100px;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(190,0,0,0.3) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero-inner {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
+        .hero-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         .hero-label {
-            font-size: 0.8rem; font-weight: 700;
+            font-size: 0.75rem; font-weight: 700;
             color: var(--utah-red);
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 1.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
         }
         .hero h1 {
-            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-size: clamp(3rem, 6vw, 5rem);
             font-weight: 900;
             text-transform: uppercase;
-            line-height: 0.9;
-            letter-spacing: -4px;
-            margin-bottom: 1.5rem;
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 2rem;
         }
-        .hero-meta {
+        .hero h1 span { color: var(--utah-red); }
+        .hero-desc {
+            max-width: 320px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        .hero-enter {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+        .hero-enter-line {
+            width: 40px; height: 2px;
+            background: var(--utah-red);
+            transition: width 0.3s;
+        }
+        .hero-enter:hover .hero-enter-line { width: 60px; }
+        .hero-right {
+            flex: 1;
+            background: var(--utah-red);
             display: flex;
             align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
         }
-        .hero-meta-line {
-            width: 50px; height: 1px;
-            background: var(--utah-red);
-        }
-        .hero-meta p {
+        .hero-right-text {
+            color: rgba(255,255,255,0.2);
             font-size: 1rem;
-            color: rgba(255,255,255,0.5);
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 3px;
+            transform: rotate(-90deg);
+            white-space: nowrap;
         }
 
         /* SECTIONS */
@@ -278,8 +297,10 @@
         /* MOBILE */
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero h1 { letter-spacing: -2px; }
-            .hero-meta { gap: 1rem; }
+            .hero { flex-direction: column; }
+            .hero-right { min-height: 40vh; }
+            .hero-right-text { transform: none; }
+            .hero-left { padding: 2rem; }
             .timeline-wrapper::before { left: 30px; }
             .timeline-item, .timeline-item:nth-child(even) {
                 justify-content: flex-start;
@@ -308,17 +329,19 @@
         </div>
     </nav>
 
-    <!-- HERO: CINEMATIC DARK -->
+    <!-- HERO: HARD SPLIT -->
     <section class="hero">
-        <div class="hero-glow"></div>
-        <div class="hero-inner">
-            <p class="hero-label">University of Utah</p>
-            <h1>Molly<br>Davi</h1>
-            <div class="hero-meta">
-                <p>Infield · #1</p>
-                <div class="hero-meta-line"></div>
-                <p>Things you don't know</p>
-            </div>
+        <div class="hero-left">
+            <p class="hero-label">The Off-Season Archive</p>
+            <h1>Molly<br><span>Davi</span></h1>
+            <p class="hero-desc">Utah Softball. Infield. The parts of the story that don't make the box score.</p>
+            <a href="#secrets" class="hero-enter">
+                Enter
+                <span class="hero-enter-line"></span>
+            </a>
+        </div>
+        <div class="hero-right">
+            <p class="hero-right-text">Utah · #1 · Infield</p>
         </div>
     </section>
 
