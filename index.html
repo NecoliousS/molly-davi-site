@@ -5,26 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Molly Davi | Utah Softball</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            /* EXACT UTAH UTES COLORS */
-            --utah-red: #BE0000;      /* Official digital red */
-            --utah-red-bright: #CC0000; /* Alternate athletics red */
+            --utah-red: #BE0000;
             --black: #000000;
             --white: #FFFFFF;
-            --gray: #707271;          /* Official Utes gray */
+            --gray: #707271;
             --light-gray: #F7F7F7;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: var(--black);
@@ -32,18 +24,16 @@
             background: var(--white);
         }
 
-        /* ===== NAVIGATION ===== */
+        /* NAV */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
             border-bottom: 3px solid var(--utah-red);
             z-index: 1000;
             padding: 1rem 0;
         }
-
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -52,414 +42,274 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
-            font-weight: 900;
-            font-size: 1.5rem;
+            font-weight: 900; font-size: 1.5rem;
             color: var(--utah-red);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-
         .nav-links a {
-            color: var(--black);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+            color: var(--black); text-decoration: none;
+            margin-left: 2rem; font-weight: 600;
+            font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 1px; transition: color 0.3s;
         }
+        .nav-links a:hover { color: var(--utah-red); }
 
-        .nav-links a:hover {
-            color: var(--utah-red);
-        }
-
-        /* ===== HERO ===== */
+        /* HERO - EDITORIAL */
         .hero {
             min-height: 100vh;
-            background: var(--utah-red);
+            background: var(--white);
+            color: var(--black);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            color: var(--white);
-            padding: 2rem;
+            padding: 8rem 2rem 4rem;
+        }
+        .hero-inner {
+            max-width: 1100px;
+            width: 100%;
             position: relative;
-            overflow: hidden;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 900;
+        .hero-tagline-top {
+            font-size: 0.85rem; font-weight: 700;
+            color: var(--utah-red);
             text-transform: uppercase;
-            letter-spacing: -3px;
-            line-height: 1;
-            margin-bottom: 1rem;
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0.9;
+            letter-spacing: 4px;
             margin-bottom: 2rem;
         }
-
-        .hero-tag {
-            display: inline-block;
-            border: 2px solid var(--white);
-            padding: 0.75rem 2rem;
-            font-weight: 600;
+        .hero h1 {
+            font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
+            line-height: 0.85;
+            letter-spacing: -6px;
+            margin-bottom: 3rem;
         }
-
-        /* ===== SECTIONS ===== */
-        section {
-            padding: 6rem 2rem;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            margin-bottom: 4rem;
-        }
-
-        .section-label {
+        .hero h1 span {
+            display: inline-block;
+            transform: translateX(15%);
             color: var(--utah-red);
+        }
+        .hero-bottom {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+        .hero-accent-line {
+            width: 60px; height: 4px;
+            background: var(--utah-red);
+            margin-bottom: 1.5rem;
+        }
+        .hero-desc {
+            max-width: 300px;
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .hero-btn {
+            display: inline-block;
+            border: 2px solid var(--black);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            color: var(--black);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .hero-btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-header { margin-bottom: 4rem; }
+        .section-label {
+            color: var(--utah-red); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 3px;
+            font-size: 0.85rem; margin-bottom: 1rem;
             display: block;
         }
-
         .section-title {
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            line-height: 1.1;
+            font-weight: 800; text-transform: uppercase;
+            letter-spacing: -1px; line-height: 1.1;
         }
 
-        /* ===== THINGS YOU DON'T KNOW ===== */
-        .secrets {
-            background: var(--white);
-        }
-
+        /* SECRETS */
+        .secrets { background: var(--white); }
         .secrets-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
-
         .secret-card {
             background: var(--light-gray);
             padding: 2.5rem;
             border-left: 4px solid var(--utah-red);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .secret-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
         .secret-number {
-            font-size: 3rem;
-            font-weight: 900;
+            font-size: 3rem; font-weight: 900;
             color: var(--utah-red);
-            opacity: 0.3;
-            line-height: 1;
+            opacity: 0.3; line-height: 1;
             margin-bottom: 1rem;
         }
-
         .secret-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.25rem; margin-bottom: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-
         .secret-card p {
-            color: var(--gray);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            color: var(--gray); font-size: 0.95rem; line-height: 1.7;
         }
 
-        /* ===== TIMELINE ===== */
-        .timeline {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        .timeline .section-label {
-            color: var(--utah-red);
-        }
-
+        /* TIMELINE */
+        .timeline { background: var(--black); color: var(--white); }
         .timeline-wrapper {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
+            position: relative; max-width: 800px; margin: 0 auto;
         }
-
         .timeline-wrapper::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
+            content: ''; position: absolute;
+            left: 50%; transform: translateX(-50%);
+            width: 2px; height: 100%;
             background: var(--utah-red);
         }
-
         .timeline-item {
-            display: flex;
-            justify-content: flex-end;
-            padding-right: 50%;
-            position: relative;
+            display: flex; justify-content: flex-end;
+            padding-right: 50%; position: relative;
             margin-bottom: 4rem;
         }
-
         .timeline-item:nth-child(even) {
             justify-content: flex-start;
-            padding-right: 0;
-            padding-left: 50%;
+            padding-right: 0; padding-left: 50%;
         }
-
         .timeline-dot {
-            position: absolute;
-            left: 50%;
+            position: absolute; left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             background: var(--utah-red);
             border: 4px solid var(--white);
-            border-radius: 50%;
-            z-index: 2;
+            border-radius: 50%; z-index: 2;
         }
-
-        .timeline-content {
-            width: 90%;
-            text-align: right;
-            padding-right: 2rem;
-        }
-
+        .timeline-content { width: 90%; text-align: right; padding-right: 2rem; }
         .timeline-item:nth-child(even) .timeline-content {
-            text-align: left;
-            padding-right: 0;
-            padding-left: 2rem;
+            text-align: left; padding-right: 0; padding-left: 2rem;
         }
-
         .timeline-year {
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.85rem; font-weight: 700;
             color: var(--utah-red);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            text-transform: uppercase; letter-spacing: 2px;
             margin-bottom: 0.5rem;
         }
-
         .timeline-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.5rem; margin-bottom: 0.75rem;
             text-transform: uppercase;
         }
+        .timeline-content p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
 
-        .timeline-content p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-        }
-
-        /* ===== STATS ===== */
-        .stats {
-            background: var(--light-gray);
-        }
-
+        /* STATS */
+        .stats { background: var(--light-gray); }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
+            gap: 2rem; text-align: center;
         }
-
         .stat-item h4 {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--utah-red);
-            line-height: 1;
+            font-size: 3rem; font-weight: 900;
+            color: var(--utah-red); line-height: 1;
             margin-bottom: 0.5rem;
         }
-
         .stat-item p {
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 0.85rem;
             color: var(--gray);
         }
 
-        /* ===== CONTENT ===== */
-        .content-section {
-            background: var(--white);
-        }
-
+        /* CONTENT */
+        .content-section { background: var(--white); }
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            gap: 4rem; align-items: center;
         }
-
         .content-text p {
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            color: var(--gray);
+            font-size: 1.1rem; color: var(--gray);
         }
-
         .btn {
-            display: inline-block;
-            background: var(--utah-red);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-            transition: background 0.3s, transform 0.3s;
-            border: none;
-            cursor: pointer;
+            display: inline-block; background: var(--utah-red);
+            color: var(--white); padding: 1rem 2.5rem;
+            text-decoration: none; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 0.85rem; transition: all 0.3s;
+            border: none; cursor: pointer;
         }
-
-        .btn:hover {
-            background: var(--black);
-            transform: translateY(-2px);
-        }
-
+        .btn:hover { background: var(--black); transform: translateY(-2px); }
         .content-image {
             background: var(--light-gray);
             aspect-ratio: 4/5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 2px;
             border: 3px solid var(--utah-red);
         }
 
-        /* ===== FOOTER ===== */
+        /* FOOTER */
         footer {
-            background: var(--black);
-            color: var(--white);
-            padding: 4rem 2rem 2rem;
-            text-align: center;
+            background: var(--black); color: var(--white);
+            padding: 4rem 2rem 2rem; text-align: center;
         }
-
         .footer-logo {
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: 2rem; font-weight: 900;
             color: var(--utah-red);
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            text-transform: uppercase; letter-spacing: 3px;
             margin-bottom: 1rem;
         }
-
         .footer-links a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            margin: 0 1.5rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-            transition: color 0.3s;
+            color: rgba(255,255,255,0.6); text-decoration: none;
+            margin: 0 1.5rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            font-size: 0.85rem; transition: color 0.3s;
         }
-
-        .footer-links a:hover {
-            color: var(--utah-red);
-        }
-
+        .footer-links a:hover { color: var(--utah-red); }
         .copyright {
-            color: rgba(255,255,255,0.3);
-            font-size: 0.85rem;
-            margin-top: 3rem;
-            padding-top: 2rem;
+            color: rgba(255,255,255,0.3); font-size: 0.85rem;
+            margin-top: 3rem; padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* ===== MOBILE FIXES ===== */
+        /* MOBILE */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                letter-spacing: -1px;
-            }
-
-            .timeline-wrapper::before {
-                left: 30px;
-            }
-
-            .timeline-item,
-            .timeline-item:nth-child(even) {
+            .nav-links { display: none; }
+            .hero h1 { letter-spacing: -2px; }
+            .hero-bottom { justify-content: flex-start; }
+            .timeline-wrapper::before { left: 30px; }
+            .timeline-item, .timeline-item:nth-child(even) {
                 justify-content: flex-start;
-                padding-left: 70px;
-                padding-right: 0;
+                padding-left: 70px; padding-right: 0;
             }
-
-            .timeline-dot {
-                left: 30px;
+            .timeline-dot { left: 30px; }
+            .timeline-content, .timeline-item:nth-child(even) .timeline-content {
+                text-align: left; padding-left: 0; width: 100%;
             }
-
-            .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                text-align: left;
-                padding-left: 0;
-                width: 100%;
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 4rem 1.5rem;
-            }
+            .content-grid { grid-template-columns: 1fr; }
+            section { padding: 4rem 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <div class="logo">Molly Davi</div>
@@ -472,16 +322,21 @@
         </div>
     </nav>
 
-    <!-- Hero -->
+    <!-- HERO: EDITORIAL -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Molly Davi</h1>
-            <p class="hero-subtitle">Utah Softball · Infield · 1</p>
-            <div class="hero-tag">Things You Don't Know</div>
+        <div class="hero-inner">
+            <p class="hero-tagline-top">Utah Softball · Infield · #1</p>
+            <h1>Molly<br><span>Davi</span></h1>
+            <div class="hero-bottom">
+                <div>
+                    <div class="hero-accent-line"></div>
+                    <p class="hero-desc">The things you know are on the stat sheet. This is everything else.</p>
+                </div>
+                <a href="#secrets" class="hero-btn">Read More</a>
+            </div>
         </div>
     </section>
 
-    <!-- Things You Don't Know -->
     <section id="secrets" class="secrets">
         <div class="container">
             <div class="section-header">
@@ -492,28 +347,27 @@
                 <div class="secret-card">
                     <div class="secret-number">01</div>
                     <h3>Secret Talent</h3>
-                    <p>[Insert something unexpected here — maybe you can juggle, or you used to do competitive dance, or you speak another language]</p>
+                    <p>[Insert something unexpected here]</p>
                 </div>
                 <div class="secret-card">
                     <div class="secret-number">02</div>
                     <h3>Pre-Game Ritual</h3>
-                    <p>[The weird specific thing you do before every game that nobody sees]</p>
+                    <p>[The weird specific thing you do before every game]</p>
                 </div>
                 <div class="secret-card">
                     <div class="secret-number">03</div>
                     <h3>Hidden Hobby</h3>
-                    <p>[What you're doing when you're not at the field — gaming, baking, photography?]</p>
+                    <p>[What you're doing when you're not at the field]</p>
                 </div>
                 <div class="secret-card">
                     <div class="secret-number">04</div>
                     <h3>The Real Molly</h3>
-                    <p>[One thing that surprises people when they actually get to know you]</p>
+                    <p>[One thing that surprises people when they get to know you]</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Timeline -->
     <section id="story" class="timeline">
         <div class="container">
             <div class="section-header">
@@ -526,7 +380,7 @@
                     <div class="timeline-content">
                         <div class="timeline-year">Childhood</div>
                         <h3>Where It Started</h3>
-                        <p>[Your hometown, first memory of softball, what got you into the game]</p>
+                        <p>[Your hometown, first memory of softball]</p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -534,7 +388,7 @@
                     <div class="timeline-content">
                         <div class="timeline-year">High School</div>
                         <h3>Becoming A Prospect</h3>
-                        <p>[Freshman/Sophomore years, first varsity start, the grind of getting noticed]</p>
+                        <p>[Freshman/Sophomore years, first varsity start]</p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -542,7 +396,7 @@
                     <div class="timeline-content">
                         <div class="timeline-year">Junior Year</div>
                         <h3>The Turning Point</h3>
-                        <p>[That summer team, the recruitment buzz, the pressure, the growth]</p>
+                        <p>[That summer team, the recruitment buzz]</p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -550,14 +404,13 @@
                     <div class="timeline-content">
                         <div class="timeline-year">Now</div>
                         <h3>Utah Utes</h3>
-                        <p>[D1 life, what you're studying, what you're chasing next]</p>
+                        <p>[D1 life, what you're studying, what's next]</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats -->
     <section id="stats" class="stats">
         <div class="container">
             <div class="section-header" style="text-align: center;">
@@ -565,45 +418,29 @@
                 <h2 class="section-title">By The Stats</h2>
             </div>
             <div class="stats-grid">
-                <div class="stat-item">
-                    <h4>.XXX</h4>
-                    <p>Batting Average</p>
-                </div>
-                <div class="stat-item">
-                    <h4>XX</h4>
-                    <p>Home Runs</p>
-                </div>
-                <div class="stat-item">
-                    <h4>XX</h4>
-                    <p>RBI's</p>
-                </div>
-                <div class="stat-item">
-                    <h4>.XXX</h4>
-                    <p>Fielding %</p>
-                </div>
+                <div class="stat-item"><h4>.XXX</h4><p>Batting Average</p></div>
+                <div class="stat-item"><h4>XX</h4><p>Home Runs</p></div>
+                <div class="stat-item"><h4>XX</h4><p>RBI's</p></div>
+                <div class="stat-item"><h4>.XXX</h4><p>Fielding %</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Content Section -->
     <section id="content" class="content-section">
         <div class="container">
             <div class="content-grid">
                 <div class="content-text">
                     <span class="section-label">Softball Content</span>
                     <h2 class="section-title" style="margin-bottom: 2rem;">The Game<br>Beyond Stats</h2>
-                    <p>[This is where you embed TikToks, YouTube videos, or write about your approach to the game. What makes you different as a player?]</p>
+                    <p>[This is where you embed TikToks, YouTube videos, or write about your approach to the game.]</p>
                     <p>[Talk about your mindset, your position work, what you're trying to prove this season.]</p>
                     <a href="#" class="btn">Watch Highlights</a>
                 </div>
-                <div class="content-image">
-                    [Photo / Video Placeholder]
-                </div>
+                <div class="content-image">[Photo / Video Placeholder]</div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-logo">Molly Davi</div>
         <div class="footer-links">
@@ -612,9 +449,7 @@
             <a href="#">Twitter/X</a>
             <a href="#">Email</a>
         </div>
-        <div class="copyright">
-            &copy; 2026 Molly Davi. Built for the moments between the highlights.
-        </div>
+        <div class="copyright">&copy; 2026 Molly Davi. Built for the moments between the highlights.</div>
     </footer>
 
 </body>
