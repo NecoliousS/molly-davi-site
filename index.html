@@ -56,80 +56,54 @@
         }
         .nav-links a:hover { color: var(--utah-red); }
 
-        /* HERO - HARD SPLIT */
+        /* HERO - TYPE MASK */
         .hero {
             min-height: 100vh;
             background: var(--white);
-            display: flex;
-            position: relative;
-            overflow: hidden;
-            padding-top: 4rem;
-        }
-        .hero-left {
-            flex: 1;
+            color: var(--black);
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding: 4rem;
-            position: relative;
-            z-index: 2;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
         }
         .hero-label {
-            font-size: 0.75rem; font-weight: 700;
+            font-size: 0.8rem; font-weight: 700;
             color: var(--utah-red);
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             margin-bottom: 2rem;
+        }
+        .hero-name-box {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
         }
         .hero h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: clamp(4rem, 15vw, 12rem);
             font-weight: 900;
             text-transform: uppercase;
-            line-height: 0.95;
-            letter-spacing: -3px;
-            margin-bottom: 2rem;
+            line-height: 0.85;
+            letter-spacing: -8px;
+            margin: 0;
+            background: linear-gradient(135deg, var(--utah-red) 0%, var(--black) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .hero h1 span { color: var(--utah-red); }
-        .hero-desc {
-            max-width: 320px;
+        .hero-quote {
+            margin-top: 3rem;
+            font-size: 1rem;
             color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-            font-size: 1rem;
+            max-width: 400px;
+            line-height: 1.6;
         }
-        .hero-enter {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: var(--black);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-        }
-        .hero-enter-line {
-            width: 40px; height: 2px;
+        .hero-line {
+            margin-top: 2rem;
+            width: 1px;
+            height: 60px;
             background: var(--utah-red);
-            transition: width 0.3s;
-        }
-        .hero-enter:hover .hero-enter-line { width: 60px; }
-        .hero-right {
-            flex: 1;
-            background: var(--utah-red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .hero-right-text {
-            color: rgba(255,255,255,0.2);
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            transform: rotate(-90deg);
-            white-space: nowrap;
         }
 
         /* SECTIONS */
@@ -297,10 +271,7 @@
         /* MOBILE */
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero { flex-direction: column; }
-            .hero-right { min-height: 40vh; }
-            .hero-right-text { transform: none; }
-            .hero-left { padding: 2rem; }
+            .hero h1 { letter-spacing: -3px; }
             .timeline-wrapper::before { left: 30px; }
             .timeline-item, .timeline-item:nth-child(even) {
                 justify-content: flex-start;
@@ -329,20 +300,14 @@
         </div>
     </nav>
 
-    <!-- HERO: HARD SPLIT -->
+    <!-- HERO: TYPE MASK -->
     <section class="hero">
-        <div class="hero-left">
-            <p class="hero-label">The Off-Season Archive</p>
-            <h1>Molly<br><span>Davi</span></h1>
-            <p class="hero-desc">Utah Softball. Infield. The parts of the story that don't make the box score.</p>
-            <a href="#secrets" class="hero-enter">
-                Enter
-                <span class="hero-enter-line"></span>
-            </a>
+        <p class="hero-label">Utah Softball · Infield · #1</p>
+        <div class="hero-name-box">
+            <h1>Molly<br>Davi</h1>
         </div>
-        <div class="hero-right">
-            <p class="hero-right-text">Utah · #1 · Infield</p>
-        </div>
+        <p class="hero-quote">"Things people don't know" isn't a tagline. It's the entire point.</p>
+        <div class="hero-line"></div>
     </section>
 
     <section id="secrets" class="secrets">
