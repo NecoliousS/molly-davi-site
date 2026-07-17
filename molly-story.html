@@ -1,1 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molly Davi | Her Story</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --utes-red: #CC0000;
+            --utes-black: #000000;
+            --utes-white: #FFFFFF;
+            --utes-gray: #666666;
+            --utes-light-gray: #f5f5f5;
+            --utes-dark-red: #990000;
+            --bg: #FFFFFF;
+            --card-bg: #f8f8f8;
+            --text-primary: #111111;
+            --text-secondary: #444444;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0;
+            width: 100%; padding: 1.5rem 4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(204,0,0,0.15);
+        }
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem; color: var(--utes-red);
+            text-decoration: none; letter-spacing: 0.05em;
+        }
+        .nav-logo span { color: var(--text-primary); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-primary); text-decoration: none;
+            font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--utes-red);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--utes-red); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero with PNG */
+        .hero-story {
+            min-height: 60vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(204,0,0,0.05), transparent);
+        }
+        .hero-story-png {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; opacity: 0.06;
+            background: url('assets/molly-portrait-png.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .hero-story-content { position: relative; z-index: 1; }
+        .hero-story-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .hero-story-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+            opacity: 0;
+        }
+        .hero-story-quote {
+            font-size: 1.3rem; color: var(--utes-gray);
+            font-style: italic; max-width: 600px;
+            margin: 2rem auto 0;
+            line-height: 1.6;
+            opacity: 0;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            padding: 6rem 4rem;
+            position: relative;
+            background: var(--utes-light-gray);
+        }
+        .timeline {
+            max-width: 1000px; margin: 0 auto;
+            position: relative;
+        }
+        .timeline::before {
+            content: ''; position: absolute;
+            left: 50%; top: 0; width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--utes-red), transparent);
+            transform: translateX(-1px);
+        }
+        .timeline-item {
+            display: flex; justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0; padding-left: 50%;
+            transform: translateX(30px);
+        }
+        .timeline-content {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .timeline-content:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 30px rgba(204,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%; top: 1.5rem;
+            width: 14px; height: 14px;
+            background: var(--utes-red);
+            border-radius: 50%;
+            transform: translateX(-7px);
+            box-shadow: 0 0 20px rgba(204,0,0,0.3);
+        }
+        .timeline-date {
+            font-size: 0.8rem; color: var(--utes-red);
+            font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 0.5rem;
+        }
+        .timeline-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem; color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-desc {
+            font-size: 0.95rem; color: var(--utes-gray);
+            line-height: 1.6;
+        }
+
+        /* Personality Cards */
+        .personality-section {
+            padding: 6rem 4rem;
+            background: var(--utes-white);
+        }
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .personality-card {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .personality-card:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 30px rgba(204,0,0,0.15);
+            transform: translateY(-8px);
+        }
+        .personality-icon {
+            font-size: 3rem; margin-bottom: 1.5rem;
+        }
+        .personality-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .personality-desc {
+            font-size: 0.9rem; color: var(--utes-gray);
+            line-height: 1.6;
+        }
+
+        /* Pre-Game Ritual with PNG */
+        .ritual-section {
+            padding: 8rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--utes-light-gray);
+        }
+        .ritual-png {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; opacity: 0.05;
+            background: url('assets/molly-braid-png.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .ritual-content {
+            position: relative; z-index: 1;
+            max-width: 700px; margin: 0 auto;
+        }
+        .ritual-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .ritual-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .ritual-desc {
+            font-size: 1.1rem; color: var(--utes-gray);
+            line-height: 1.8;
+            opacity: 0;
+        }
+        .braid-animation {
+            width: 200px; height: 200px;
+            margin: 3rem auto 0;
+            position: relative;
+            opacity: 0;
+        }
+        .braid-line {
+            position: absolute;
+            width: 3px; height: 0;
+            background: linear-gradient(to bottom, var(--utes-red), var(--softball-yellow));
+            border-radius: 2px;
+        }
+        .braid-left { left: 40%; transform: rotate(-15deg); }
+        .braid-right { left: 60%; transform: rotate(15deg); }
+        .braid-center { left: 50%; transform: translateX(-50%); }
+
+        /* Turning Point with PNG */
+        .turning-section {
+            padding: 8rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px; margin: 0 auto;
+            background: var(--utes-white);
+            position: relative;
+        }
+        .turning-png {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; opacity: 0.04;
+            background: url('assets/molly-action2-png.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .turning-text {
+            opacity: 0;
+            transform: translateX(-30px);
+            position: relative; z-index: 1;
+        }
+        .turning-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1rem;
+        }
+        .turning-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        .turning-desc {
+            font-size: 1.05rem; color: var(--utes-gray);
+            line-height: 1.8;
+        }
+        .turning-desc p { margin-bottom: 1rem; }
+        .turning-visual {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(30px);
+            position: relative; z-index: 1;
+        }
+        .turning-stat {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem; color: var(--utes-red);
+            display: block;
+        }
+        .turning-stat-label {
+            font-size: 1rem; color: var(--utes-gray);
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* Future */
+        .future-section {
+            padding: 8rem 4rem;
+            text-align: center;
+            background: var(--utes-light-gray);
+            position: relative;
+        }
+        .future-png {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; opacity: 0.04;
+            background: url('assets/molly-utes-png.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .future-content {
+            max-width: 800px; margin: 0 auto;
+            position: relative; z-index: 1;
+        }
+        .future-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .future-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .future-desc {
+            font-size: 1.1rem; color: var(--utes-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            opacity: 0;
+        }
+        .future-goals {
+            display: flex; justify-content: center;
+            gap: 2rem; flex-wrap: wrap;
+            opacity: 0;
+        }
+        .future-goal {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            font-size: 0.9rem; color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .future-goal:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 20px rgba(204,0,0,0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Socials */
+        .socials-section {
+            padding: 4rem 4rem;
+            text-align: center;
+            background: var(--utes-white);
+        }
+        .socials-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; color: var(--text-primary);
+            margin-bottom: 2rem; letter-spacing: 0.05em;
+            opacity: 0;
+        }
+        .socials-grid {
+            display: flex; justify-content: center;
+            gap: 1.5rem; flex-wrap: wrap;
+            opacity: 0;
+        }
+        .social-link {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600; font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 20px rgba(204,0,0,0.15);
+            transform: translateY(-3px);
+            color: var(--utes-red);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(204,0,0,0.15);
+            background: var(--utes-white);
+        }
+        footer p { color: var(--utes-gray); font-size: 0.85rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero-story { padding: 6rem 1.5rem 3rem; }
+            section { padding: 4rem 1.5rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(even) {
+                padding-left: 50px; padding-right: 0;
+                justify-content: flex-start;
+            }
+            .timeline-dot { left: 20px; transform: translateX(-7px); }
+            .turning-section { grid-template-columns: 1fr; }
+            .personality-grid { grid-template-columns: 1fr; }
+            .socials-grid { flex-direction: column; align-items: center; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">MOLLY<span>DAVI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="story.html">Story</a></li>
+            <li><a href="stats.html">Stats</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero-story">
+        <div class="hero-story-png"></div>
+        <div class="hero-story-content">
+            <div class="hero-story-label">Her Journey</div>
+            <h1 class="hero-story-title">FROM CALIFORNIA TO UTAH</h1>
+            <p class="hero-story-quote">"I realized I was D1 capable. That was the turning point."</p>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">November 2008</div>
+                    <div class="timeline-title">Born in Monterey</div>
+                    <div class="timeline-desc">Born in Monterey, California. Grew up on a ranch, learned to ride horses. Family has deep roots in California before the big move.</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">6th Grade</div>
+                    <div class="timeline-title">The Move to Hawaii</div>
+                    <div class="timeline-desc">Relocated to Hilo, Hawaii. Started playing rec ball at age 11. Found her passion for pitching. The island became home.</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Texas Years</div>
+                    <div class="timeline-title">Homeschool & Grind</div>
+                    <div class="timeline-desc">Moved to Texas, homeschooled while training all day. Throwing, pitching, gym workouts. The grind that built the foundation.</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Freshman Year</div>
+                    <div class="timeline-title">The Turning Point</div>
+                    <div class="timeline-desc">Finished top 10 at a national tournament competing against already-committed D1 talent. Realized she belonged at the highest level.</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2024-2025</div>
+                    <div class="timeline-title">Maryknoll Spartans</div>
+                    <div class="timeline-desc">Dominated at Maryknoll. Set Hawaii single-season strikeout record (226). 0.36 ERA. National Pitcher of the Year. The numbers spoke for themselves.</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2027</div>
+                    <div class="timeline-title">Utah Utes</div>
+                    <div class="timeline-desc">Committed to the University of Utah. Big 12 Conference. Ready to bring her riseball, knuckleball, and flip change to Salt Lake City.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="personality-section">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div style="font-size: 0.8rem; color: var(--utes-red); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 1rem;">Beyond the Diamond</div>
+            <h2 style="font-family: 'Bebas Neue'; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--text-primary);">WHO IS MOLLY?</h2>
+        </div>
+        <div class="personality-grid">
+            <div class="personality-card">
+                <div class="personality-icon">🤹</div>
+                <div class="personality-title">Juggler</div>
+                <div class="personality-desc">Hidden talent that surprises everyone. Can juggle like a pro — a skill that translates to hand-eye coordination on the mound.</div>
+            </div>
+            <div class="personality-card">
+                <div class="personality-icon">🧱</div>
+                <div class="personality-title">Lego Builder</div>
+                <div class="personality-desc">Off the field, she's building masterpieces brick by brick. Patience, precision, creativity — same skills that make her a great pitcher.</div>
+            </div>
+            <div class="personality-card">
+                <div class="personality-icon">🧸</div>
+                <div class="personality-title">Jellycat Collector</div>
+                <div class="personality-desc">Obsessed with Jellycat plushies. Flips them, collects them, loves them. Softball player with a soft side.</div>
+            </div>
+            <div class="personality-card">
+                <div class="personality-icon">🐴</div>
+                <div class="personality-title">Horseback Rider</div>
+                <div class="personality-desc">Grew up on a ranch in California. Can ride a horse with confidence. That balance and core strength? It shows in her pitching.</div>
+            </div>
+            <div class="personality-card">
+                <div class="personality-icon">😂</div>
+                <div class="personality-title">Funny & Outgoing</div>
+                <div class="personality-desc">The thing people don't know before meeting her? She's hilarious. Outgoing, makes everyone laugh, brings energy to every room.</div>
+            </div>
+            <div class="personality-card">
+                <div class="personality-icon">🎨</div>
+                <div class="personality-title">Artist</div>
+                <div class="personality-desc">Painting and drawing in her free time. Another creative outlet that keeps her mind sharp between games and training.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ritual-section">
+        <div class="ritual-png"></div>
+        <div class="ritual-content">
+            <div class="ritual-label">Pre-Game Ritual</div>
+            <h2 class="ritual-title">THE DUTCH BRAID</h2>
+            <p class="ritual-desc">Before every game, Molly does two braids into a bun — a Dutch braid. It's her signature look, her mental reset, her way of locking in. By the time the braids are done, she's ready to deal.</p>
+            <div class="braid-animation">
+                <div class="braid-line braid-left"></div>
+                <div class="braid-line braid-center"></div>
+                <div class="braid-line braid-right"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="turning-section">
+        <div class="turning-png"></div>
+        <div class="turning-text">
+            <div class="turning-label">The Moment</div>
+            <h2 class="turning-title">THE TURNING POINT</h2>
+            <div class="turning-desc">
+                <p>Before freshman year, Molly discovered her true talent and ability. Competing at a national tournament, she finished in the <strong>top 10</strong> — going up against players already committed to Division 1 programs.</p>
+                <p>That was the moment. The realization that she wasn't just good — she was <strong>D1 capable</strong>. That she belonged on the biggest stage.</p>
+                <p>From that day forward, everything changed. The training got harder. The focus got sharper. The dream got real.</p>
+            </div>
+        </div>
+        <div class="turning-visual">
+            <span class="turning-stat">TOP 10</span>
+            <span class="turning-stat-label">National Tournament</span>
+            <p style="color: var(--utes-gray); margin-top: 1rem; font-size: 0.9rem;">Competing against committed D1 talent before she even started high school</p>
+        </div>
+    </section>
+
+    <section class="future-section">
+        <div class="future-png"></div>
+        <div class="future-content">
+            <div class="future-label">What's Next</div>
+            <h2 class="future-title">UTAH & BEYOND</h2>
+            <p class="future-desc">Molly's heading to Salt Lake City to join the Utah Utes in the Big 12. She's looking forward to exploring the city, making new friends and connections, and helping better the program. Beyond college, she's interested in coaching, veterinary studies, and education.</p>
+            <div class="future-goals">
+                <div class="future-goal">🐾 Veterinary Studies</div>
+                <div class="future-goal">📚 Education</div>
+                <div class="future-goal">⚾ Coach Beyond College</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="socials-section">
+        <h2 class="socials-title">FOLLOW MOLLY</h2>
+        <div class="socials-grid">
+            <a href="https://x.com/mollydavi27" class="social-link" target="_blank">X / Twitter</a>
+            <a href="https://www.instagram.com/mollydavi27/" class="social-link" target="_blank">Instagram</a>
+            <a href="https://www.tiktok.com/@mollydavi27" class="social-link" target="_blank">TikTok</a>
+            <a href="https://www.facebook.com/molly.davi.58" class="social-link" target="_blank">Facebook</a>
+            <a href="https://www.youtube.com/@MollyDavi" class="social-link" target="_blank">YouTube</a>
+            <a href="https://www.maxpreps.com/hi/hilo/hilo-high-school-vikings/softball/players/molly-davi/" class="social-link" target="_blank">MaxPreps</a>
+            <a href="https://www.sportsrecruits.com/athlete/molly_davi" class="social-link" target="_blank">SportsRecruits</a>
+            <a href="https://www.armourelitefastpitch.com/team/roster/molly-davi" class="social-link" target="_blank">Armour Elite</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with love for Molly Davi. Go Utes.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        anime.timeline({ easing: 'easeOutExpo' })
+            .add({ targets: '.hero-story-label', opacity: [0,1], translateY: [20,0], duration: 800, delay: 300 })
+            .add({ targets: '.hero-story-title', opacity: [0,1], translateY: [30,0], duration: 1000 }, '-=400')
+            .add({ targets: '.hero-story-quote', opacity: [0,1], translateY: [20,0], duration: 800 }, '-=400');
+
+        // Timeline
+        gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+            gsap.to(item, {
+                opacity: 1, x: 0,
+                duration: 0.8, delay: i * 0.15,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: item, start: 'top 85%' }
+            });
+        });
+
+        // Personality Cards
+        gsap.utils.toArray('.personality-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Ritual Section
+        gsap.to('.ritual-label', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.ritual-label', start: 'top 85%' } });
+        gsap.to('.ritual-title', { opacity: 1, y: 0, duration: 1, delay: 0.2, scrollTrigger: { trigger: '.ritual-title', start: 'top 85%' } });
+        gsap.to('.ritual-desc', { opacity: 1, y: 0, duration: 0.8, delay: 0.4, scrollTrigger: { trigger: '.ritual-desc', start: 'top 85%' } });
+        gsap.to('.braid-animation', { opacity: 1, duration: 0.8, delay: 0.6, scrollTrigger: { trigger: '.braid-animation', start: 'top 85%' } });
+
+        // Braid Animation
+        anime({
+            targets: '.braid-line',
+            height: [0, 180],
+            duration: 2000,
+            easing: 'easeInOutQuad',
+            delay: anime.stagger(200),
+            loop: true,
+            direction: 'alternate',
+            scrollTrigger: { trigger: '.braid-animation', start: 'top 80%' }
+        });
+
+        // Turning Point
+        gsap.to('.turning-text', { opacity: 1, x: 0, duration: 1, scrollTrigger: { trigger: '.turning-text', start: 'top 80%' } });
+        gsap.to('.turning-visual', { opacity: 1, x: 0, duration: 1, delay: 0.2, scrollTrigger: { trigger: '.turning-visual', start: 'top 80%' } });
+
+        // Future
+        gsap.to('.future-label', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.future-label', start: 'top 85%' } });
+        gsap.to('.future-title', { opacity: 1, y: 0, duration: 1, delay: 0.2, scrollTrigger: { trigger: '.future-title', start: 'top 85%' } });
+        gsap.to('.future-desc', { opacity: 1, y: 0, duration: 0.8, delay: 0.4, scrollTrigger: { trigger: '.future-desc', start: 'top 85%' } });
+        gsap.to('.future-goals', { opacity: 1, y: 0, duration: 0.8, delay: 0.6, scrollTrigger: { trigger: '.future-goals', start: 'top 85%' } });
+
+        // Socials
+        gsap.to('.socials-title', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.socials-title', start: 'top 85%' } });
+        gsap.to('.socials-grid', { opacity: 1, y: 0, duration: 0.8, delay: 0.2, scrollTrigger: { trigger: '.socials-grid', start: 'top 85%' } });
+    </script>
+</body>
+</html>
