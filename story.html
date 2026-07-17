@@ -31,44 +31,6 @@
             background: var(--bg);
             color: var(--text-primary);
             overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* Baseball Cursor */
-        .cursor {
-            width: 24px; height: 24px;
-            background: var(--utes-white);
-            border-radius: 50%;
-            position: fixed; pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.15s ease, width 0.3s, height 0.3s;
-            border: 2px solid var(--utes-red);
-            box-shadow: inset -3px -3px 0 rgba(0,0,0,0.1);
-        }
-        .cursor::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 0;
-            width: 100%; height: 2px;
-            background: var(--utes-red);
-            transform: translateY(-50%) rotate(45deg);
-        }
-        .cursor::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 0;
-            width: 100%; height: 2px;
-            background: var(--utes-red);
-            transform: translateY(-50%) rotate(-45deg);
-        }
-        .cursor.hover {
-            width: 40px; height: 40px;
-            background: var(--utes-red);
-            border: 2px solid var(--utes-white);
-        }
-        .cursor.hover::before,
-        .cursor.hover::after {
-            background: var(--utes-white);
         }
 
         /* Navigation */
@@ -468,8 +430,6 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor { display: none; }
             nav { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
             .hero-story { padding: 6rem 1.5rem 3rem; }
@@ -488,8 +448,6 @@
 <base target="_blank">
 </head>
 <body>
-    <div class="cursor"></div>
-
     <nav>
         <a href="index.html" class="nav-logo">MOLLY<span>DAVI</span></a>
         <ul class="nav-links">
@@ -665,25 +623,6 @@
     </footer>
 
     <script>
-        // Baseball Cursor
-        const cursor = document.querySelector('.cursor');
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY;
-        });
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
-            cursor.style.left = cursorX - 12 + 'px';
-            cursor.style.top = cursorY - 12 + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-        document.querySelectorAll('a, button, .stat-card, .social-link, .btn, .timeline-content, .personality-card, .future-goal').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
         gsap.registerPlugin(ScrollTrigger);
 
         // Hero Animation
