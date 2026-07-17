@@ -1,1 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molly Davi | Stats & Accolades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --utes-red: #CC0000;
+            --utes-black: #000000;
+            --utes-white: #FFFFFF;
+            --utes-gray: #666666;
+            --utes-light-gray: #f5f5f5;
+            --utes-dark-red: #990000;
+            --softball-yellow: #FFD700;
+            --bg: #FFFFFF;
+            --card-bg: #f8f8f8;
+            --text-primary: #111111;
+            --text-secondary: #444444;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0;
+            width: 100%; padding: 1.5rem 4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(204,0,0,0.15);
+        }
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem; color: var(--utes-red);
+            text-decoration: none; letter-spacing: 0.05em;
+        }
+        .nav-logo span { color: var(--text-primary); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-primary); text-decoration: none;
+            font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--utes-red);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--utes-red); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero Stats with PNG */
+        .hero-stats {
+            min-height: 50vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+            background: linear-gradient(180deg, rgba(204,0,0,0.08), transparent);
+        }
+        .hero-stats-png {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0; opacity: 0.06;
+            background: url('assets/molly-stats-png.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+        }
+        .hero-stats-content { position: relative; z-index: 1; }
+        .hero-stats-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        .hero-stats-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: var(--text-primary);
+            letter-spacing: 0.05em;
+            opacity: 0;
+        }
+        .hero-stats-subtitle {
+            font-size: 1.1rem; color: var(--utes-gray);
+            margin-top: 1rem; font-weight: 400;
+            opacity: 0;
+        }
+
+        /* Big Numbers */
+        .big-numbers {
+            padding: 6rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px; margin: 0 auto;
+            background: var(--utes-light-gray);
+        }
+        .big-number-card {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .big-number-card:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 40px rgba(204,0,0,0.15);
+            transform: translateY(-8px);
+        }
+        .big-number-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.5rem; color: var(--utes-red);
+            line-height: 1;
+            display: block;
+        }
+        .big-number-label {
+            font-size: 0.85rem; color: var(--utes-gray);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            font-weight: 600; margin-top: 0.75rem;
+        }
+        .big-number-detail {
+            font-size: 0.8rem; color: var(--utes-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Stats Tables */
+        .stats-section {
+            padding: 6rem 4rem;
+            background: var(--utes-white);
+        }
+        .stats-container {
+            max-width: 1000px; margin: 0 auto;
+        }
+        .stats-header {
+            text-align: center; margin-bottom: 3rem;
+        }
+        .stats-header-label {
+            font-size: 0.8rem; color: var(--utes-red);
+            text-transform: uppercase; letter-spacing: 0.2em;
+            font-weight: 700; margin-bottom: 1rem;
+            opacity: 0;
+        }
+        .stats-header-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-primary);
+            opacity: 0;
+        }
+        .stats-table-wrapper {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .stats-table-title {
+            padding: 1.5rem 2rem;
+            background: rgba(204,0,0,0.08);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem; color: var(--text-primary);
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(204,0,0,0.15);
+        }
+        .stats-table {
+            width: 100%; border-collapse: collapse;
+        }
+        .stats-table th {
+            padding: 1rem 2rem;
+            text-align: left;
+            font-size: 0.8rem; color: var(--utes-gray);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(204,0,0,0.15);
+        }
+        .stats-table td {
+            padding: 1rem 2rem;
+            font-size: 0.95rem; color: var(--text-primary);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .stats-table tr:last-child td { border-bottom: none; }
+        .stats-table tr:hover { background: rgba(204,0,0,0.03); }
+        .stats-table .highlight {
+            color: var(--utes-red); font-weight: 700;
+        }
+
+        /* Accolades */
+        .accolades-section {
+            padding: 6rem 4rem;
+            background: var(--utes-light-gray);
+        }
+        .accolades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .accolade-card {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex; align-items: flex-start; gap: 1.5rem;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .accolade-card:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 25px rgba(204,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        .accolade-icon {
+            width: 50px; height: 50px;
+            background: var(--utes-red);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; flex-shrink: 0;
+        }
+        .accolade-content { flex: 1; }
+        .accolade-title {
+            font-size: 1rem; font-weight: 700;
+            color: var(--text-primary); margin-bottom: 0.25rem;
+        }
+        .accolade-year {
+            font-size: 0.75rem; color: var(--utes-red);
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 0.5rem;
+        }
+        .accolade-desc {
+            font-size: 0.85rem; color: var(--utes-gray);
+            line-height: 1.5;
+        }
+
+        /* Championships */
+        .championships-section {
+            padding: 6rem 4rem;
+            text-align: center;
+            background: var(--utes-white);
+        }
+        .championships-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px; margin: 3rem auto 0;
+        }
+        .championship-card {
+            background: var(--utes-white);
+            border: 2px solid rgba(204,0,0,0.2);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .championship-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(204,0,0,0.08), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .championship-card:hover::before { opacity: 1; }
+        .championship-card:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 40px rgba(204,0,0,0.15);
+            transform: translateY(-8px);
+        }
+        .championship-trophy {
+            font-size: 3rem; margin-bottom: 1rem;
+        }
+        .championship-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .championship-detail {
+            font-size: 0.85rem; color: var(--utes-gray);
+        }
+        .championship-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--utes-red);
+            color: var(--utes-white);
+            font-size: 0.7rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            border-radius: 4px; margin-top: 1rem;
+        }
+
+        /* Rankings */
+        .rankings-section {
+            padding: 6rem 4rem;
+            background: var(--utes-light-gray);
+        }
+        .rankings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px; margin: 3rem auto 0;
+        }
+        .ranking-card {
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .ranking-card:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 30px rgba(204,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        .ranking-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem; color: var(--utes-red);
+            line-height: 1;
+        }
+        .ranking-label {
+            font-size: 0.85rem; color: var(--utes-gray);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            font-weight: 600; margin-top: 0.5rem;
+        }
+        .ranking-source {
+            font-size: 0.75rem; color: var(--utes-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Socials */
+        .socials-section {
+            padding: 4rem 4rem;
+            text-align: center;
+            background: var(--utes-white);
+        }
+        .socials-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; color: var(--text-primary);
+            margin-bottom: 2rem; letter-spacing: 0.05em;
+            opacity: 0;
+        }
+        .socials-grid {
+            display: flex; justify-content: center;
+            gap: 1.5rem; flex-wrap: wrap;
+            opacity: 0;
+        }
+        .social-link {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--utes-white);
+            border: 1px solid rgba(204,0,0,0.15);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600; font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            border-color: var(--utes-red);
+            box-shadow: 0 0 20px rgba(204,0,0,0.15);
+            transform: translateY(-3px);
+            color: var(--utes-red);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(204,0,0,0.15);
+            background: var(--utes-white);
+        }
+        footer p { color: var(--utes-gray); font-size: 0.85rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero-stats { padding: 6rem 1.5rem 3rem; }
+            section { padding: 4rem 1.5rem; }
+            .big-numbers { grid-template-columns: 1fr; }
+            .rankings-grid { grid-template-columns: 1fr; }
+            .stats-table th, .stats-table td { padding: 0.75rem 1rem; font-size: 0.85rem; }
+            .socials-grid { flex-direction: column; align-items: center; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo">MOLLY<span>DAVI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="story.html">Story</a></li>
+            <li><a href="stats.html">Stats</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero-stats">
+        <div class="hero-stats-png"></div>
+        <div class="hero-stats-content">
+            <div class="hero-stats-label">The Numbers</div>
+            <h1 class="hero-stats-title">STATS & ACCOLADES</h1>
+            <p class="hero-stats-subtitle">Official stats from Maryknoll Spartans, Mojo Lewis, and Armour Elite</p>
+        </div>
+    </section>
+
+    <section class="big-numbers">
+        <div class="big-number-card">
+            <span class="big-number-value" data-count="226">0</span>
+            <span class="big-number-label">Strikeouts</span>
+            <span class="big-number-detail">2025 Season | Hawaii Record</span>
+        </div>
+        <div class="big-number-card">
+            <span class="big-number-value" data-count="0">0.36</span>
+            <span class="big-number-label">ERA</span>
+            <span class="big-number-detail">2025 Season</span>
+        </div>
+        <div class="big-number-card">
+            <span class="big-number-value" data-count="0">0.00</span>
+            <span class="big-number-label">ERA</span>
+            <span class="big-number-detail">2024 Season | MaxPreps #1</span>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-header">
+                <div class="stats-header-label">High School</div>
+                <h2 class="stats-header-title">MARYKNOLL SPARTANS</h2>
+            </div>
+            <div class="stats-table-wrapper">
+                <div class="stats-table-title">2025 SEASON</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Stat</th>
+                            <th>Value</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Innings Pitched</td><td class="highlight">98.0</td><td>—</td></tr>
+                        <tr><td>Strikeouts</td><td class="highlight">226</td><td>Hawaii Single-Season Record</td></tr>
+                        <tr><td>Walks</td><td>11</td><td>—</td></tr>
+                        <tr><td>ERA</td><td class="highlight">0.36</td><td>Regular Season: 0.00</td></tr>
+                        <tr><td>No-Hitters</td><td class="highlight">3</td><td>—</td></tr>
+                        <tr><td>On-Base %</td><td>.468</td><td>—</td></tr>
+                        <tr><td>Strikeouts/Game</td><td>16.5</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-header" style="margin-top: 4rem;">
+                <div class="stats-header-label">Travel Ball</div>
+                <h2 class="stats-header-title">MOJO LEWIS (2025)</h2>
+            </div>
+            <div class="stats-table-wrapper">
+                <div class="stats-table-title">TRAVEL SEASON</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th>Stat</th><th>Value</th><th>Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Innings Pitched</td><td>90.1</td><td>—</td></tr>
+                        <tr><td>Strikeouts</td><td>101</td><td>—</td></tr>
+                        <tr><td>Earned Runs</td><td>21</td><td>—</td></tr>
+                        <tr><td>ERA</td><td>1.62</td><td>—</td></tr>
+                        <tr><td>WHIP</td><td>0.919</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-header" style="margin-top: 4rem;">
+                <div class="stats-header-label">Current</div>
+                <h2 class="stats-header-title">ARMOUR ELITE (2026)</h2>
+            </div>
+            <div class="stats-table-wrapper">
+                <div class="stats-table-title">2026 SEASON</div>
+                <table class="stats-table">
+                    <thead>
+                        <tr><th>Stat</th><th>Value</th><th>Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Record</td><td class="highlight">15-2</td><td>As of 2026</td></tr>
+                        <tr><td>ERA</td><td>2.01</td><td>—</td></tr>
+                        <tr><td>Record (April)</td><td>9-1</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="accolades-section">
+        <div class="stats-header" style="margin-bottom: 3rem;">
+            <div class="stats-header-label">Awards</div>
+            <h2 class="stats-header-title">NATIONAL ACCOLADES</h2>
+        </div>
+        <div class="accolades-grid">
+            <div class="accolade-card">
+                <div class="accolade-icon">🏆</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">National Pitcher of the Year</div>
+                    <div class="accolade-desc">Fastpitch Watch — Best pitcher in the nation</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">⭐</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">National Player of the Month</div>
+                    <div class="accolade-desc">Fastpitch Watch — March 2025</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">🔥</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">National Player of the Week</div>
+                    <div class="accolade-desc">Multiple weeks — Extra Innings, Line Drive Media, Fastpitch Watch</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">📈</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">Hot Watch List (2027)</div>
+                    <div class="accolade-desc">Softball America — Top prospect to watch</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">🎯</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">Top 20 Pitcher Rankings</div>
+                    <div class="accolade-desc">Softball America — National recognition</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">💎</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">Top 7 Pitcher (Class of 2027)</div>
+                    <div class="accolade-desc">Prep Softball — Elite company</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">⚡</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">Diamond Elite POTW</div>
+                    <div class="accolade-desc">National Travel Ball Player of the Week</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">📊</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2024</div>
+                    <div class="accolade-title">MaxPreps #1 ERA</div>
+                    <div class="accolade-desc">Nation's best — 0.00 ERA</div>
+                </div>
+            </div>
+            <div class="accolade-card">
+                <div class="accolade-icon">🏅</div>
+                <div class="accolade-content">
+                    <div class="accolade-year">2025</div>
+                    <div class="accolade-title">Extra Elite 100 Pitchers</div>
+                    <div class="accolade-desc">Extra Inning Softball — Top 100 nationally</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="championships-section">
+        <div class="stats-header" style="margin-bottom: 3rem;">
+            <div class="stats-header-label">Championships</div>
+            <h2 class="stats-header-title">TITLES WON</h2>
+        </div>
+        <div class="championships-grid">
+            <div class="championship-card">
+                <div class="championship-trophy">🏆</div>
+                <div class="championship-name">PGF NATIONAL CHAMPIONS</div>
+                <div class="championship-detail">Premier Girls Fastpitch</div>
+                <span class="championship-tag">National</span>
+            </div>
+            <div class="championship-card">
+                <div class="championship-trophy">🏆</div>
+                <div class="championship-name">MOJO INVITATIONAL</div>
+                <div class="championship-detail">Tournament Champions</div>
+                <span class="championship-tag">Invitational</span>
+            </div>
+            <div class="championship-card">
+                <div class="championship-trophy">🏆</div>
+                <div class="championship-name">SHOW ME THE MONEY</div>
+                <div class="championship-detail">10K & 25K Divisions</div>
+                <span class="championship-tag">Champions</span>
+            </div>
+            <div class="championship-card">
+                <div class="championship-trophy">🏆</div>
+                <div class="championship-name">MILILANI TOURNAMENT</div>
+                <div class="championship-detail">Hawaii Tournament</div>
+                <span class="championship-tag">Champions</span>
+            </div>
+            <div class="championship-card">
+                <div class="championship-trophy">🏆</div>
+                <div class="championship-name">ATLANTA LEGACY</div>
+                <div class="championship-detail">Armour Elite — 2026</div>
+                <span class="championship-tag">Champions</span>
+            </div>
+            <div class="championship-card">
+                <div class="championship-trophy">🥇</div>
+                <div class="championship-name">16U PATRIOT GAMES</div>
+                <div class="championship-detail">Colorado — 2026</div>
+                <span class="championship-tag">Competed</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="rankings-section">
+        <div class="stats-header" style="margin-bottom: 3rem;">
+            <div class="stats-header-label">Rankings</div>
+            <h2 class="stats-header-title">NATIONAL RANKINGS</h2>
+        </div>
+        <div class="rankings-grid">
+            <div class="ranking-card">
+                <span class="ranking-number">#108</span>
+                <span class="ranking-label">Overall</span>
+                <span class="ranking-source">Softball America</span>
+            </div>
+            <div class="ranking-card">
+                <span class="ranking-number">#39</span>
+                <span class="ranking-label">Pitcher</span>
+                <span class="ranking-source">Softball America</span>
+            </div>
+            <div class="ranking-card">
+                <span class="ranking-number">4★</span>
+                <span class="ranking-label">Rating</span>
+                <span class="ranking-source">Softball America</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="socials-section">
+        <h2 class="socials-title">FOLLOW MOLLY</h2>
+        <div class="socials-grid">
+            <a href="https://x.com/mollydavi27" class="social-link" target="_blank">X / Twitter</a>
+            <a href="https://www.instagram.com/mollydavi27/" class="social-link" target="_blank">Instagram</a>
+            <a href="https://www.tiktok.com/@mollydavi27" class="social-link" target="_blank">TikTok</a>
+            <a href="https://www.facebook.com/molly.davi.58" class="social-link" target="_blank">Facebook</a>
+            <a href="https://www.youtube.com/@MollyDavi" class="social-link" target="_blank">YouTube</a>
+            <a href="https://www.maxpreps.com/hi/hilo/hilo-high-school-vikings/softball/players/molly-davi/" class="social-link" target="_blank">MaxPreps</a>
+            <a href="https://www.sportsrecruits.com/athlete/molly_davi" class="social-link" target="_blank">SportsRecruits</a>
+            <a href="https://www.armourelitefastpitch.com/team/roster/molly-davi" class="social-link" target="_blank">Armour Elite</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with love for Molly Davi. Go Utes.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        anime.timeline({ easing: 'easeOutExpo' })
+            .add({ targets: '.hero-stats-label', opacity: [0,1], translateY: [20,0], duration: 800, delay: 300 })
+            .add({ targets: '.hero-stats-title', opacity: [0,1], translateY: [30,0], duration: 1000 }, '-=400')
+            .add({ targets: '.hero-stats-subtitle', opacity: [0,1], translateY: [20,0], duration: 800 }, '-=400');
+
+        // Big Number Counters
+        document.querySelectorAll('.big-number-value').forEach(el => {
+            const val = el.textContent;
+            if (val.includes('.')) {
+                anime({
+                    targets: el,
+                    innerHTML: [0, parseFloat(val)],
+                    round: 100,
+                    easing: 'easeOutExpo',
+                    duration: 2500,
+                    scrollTrigger: { trigger: el, start: 'top 85%' },
+                    update: function(anim) {
+                        el.innerHTML = parseFloat(el.innerHTML).toFixed(2);
+                    }
+                });
+            } else {
+                anime({
+                    targets: el,
+                    innerHTML: [0, parseInt(val)],
+                    round: 1,
+                    easing: 'easeOutExpo',
+                    duration: 2500,
+                    scrollTrigger: { trigger: el, start: 'top 85%' }
+                });
+            }
+        });
+
+        // Big Number Cards
+        gsap.utils.toArray('.big-number-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Stats Tables
+        gsap.to('.stats-header-label', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.stats-header-label', start: 'top 85%' } });
+        gsap.to('.stats-header-title', { opacity: 1, y: 0, duration: 1, delay: 0.2, scrollTrigger: { trigger: '.stats-header-title', start: 'top 85%' } });
+        gsap.utils.toArray('.stats-table-wrapper').forEach((table, i) => {
+            gsap.to(table, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.2,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: table, start: 'top 85%' }
+            });
+        });
+
+        // Accolades
+        gsap.utils.toArray('.accolade-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.08,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Championships
+        gsap.utils.toArray('.championship-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Rankings
+        gsap.utils.toArray('.ranking-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1, y: 0,
+                duration: 0.8, delay: i * 0.15,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Socials
+        gsap.to('.socials-title', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.socials-title', start: 'top 85%' } });
+        gsap.to('.socials-grid', { opacity: 1, y: 0, duration: 0.8, delay: 0.2, scrollTrigger: { trigger: '.socials-grid', start: 'top 85%' } });
+    </script>
+</body>
+</html>
